@@ -1,0 +1,14 @@
+Bootstrap: docker
+From: ubuntu:latest
+
+%post
+  apt-get update
+  apt-get -y install software-properties-common 
+  apt-add-repository -y ppa:ansible/ansible 
+  apt-get -y install ansible python-pip wget tree vim sudo 
+  mkdir /tmp/gcac
+  cd /tmp/gcac && git clone -b gcac-test https://github.com/Lynnlab-JNU/gcac-playbook.git
+  ansible-playbook -i "localhost," -c local /tmp/gcac/gcac-playbook/provisioning/galaxy-os-playbook1.yml
+  ansible-playbook -i "localhost," -c local /tmp/gcac/gcac-playbook/provisioning/galaxy-playbook2.yml
+  ansible-playbook -i "localhost," -c local /tmp/gcac/gcac-playbook/provisioning/gcac-dependencies-playbook3.yml
+  ansible-playbook -i "localhost," -c local /tmp/gcac/gcac-playbook/provisioning/galaxy-tools-playbook4.yml

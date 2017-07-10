@@ -1,0 +1,14 @@
+Bootstrap: docker
+From: centos:7
+
+%post
+  yum install -y epel-release
+  yum update -y
+  yum groupinstall -y "Development Tools" 
+  yum install -y sudo ansible wget python-pip tree vim
+  mkdir /tmp/gcac
+  cd /tmp/gcac && git clone -b gcac-test https://github.com/Lynnlab-JNU/gcac-playbook.git
+  ansible-playbook -i "localhost," -c local /tmp/gcac/gcac-playbook/provisioning/galaxy-os-playbook1.yml
+  ansible-playbook -i "localhost," -c local /tmp/gcac/gcac-playbook/provisioning/galaxy-playbook2.yml
+  ansible-playbook -i "localhost," -c local /tmp/gcac/gcac-playbook/provisioning/gcac-dependencies-playbook3.yml
+  ansible-playbook -i "localhost," -c local /tmp/gcac/gcac-playbook/provisioning/galaxy-tools-playbook4.yml
